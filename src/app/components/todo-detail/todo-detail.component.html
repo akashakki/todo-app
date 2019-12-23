@@ -1,0 +1,51 @@
+<div class="col-sm-12 pt-5">
+  <div class="col-md-12">
+    <form id="todoForm" #todoForm="ngForm" (ngSubmit)="onTodoSubmitForm(todoForm);" novalidat>
+      <fieldset class="scheduler-border">
+        <legend class="scheduler-border">{{mode}} Todo</legend>
+        <div class="form-group row">
+          <label for="taskName" class="col-md-2 col-form-label">Task Name</label>
+          <div class="col-md-5">
+            <input type="text" class="form-control" #taskName="ngModel" name="taskName" [(ngModel)]="todoDetail.taskName" placeholder="Task Name" required>
+            <div [hidden]="taskName.valid || (taskName.pristine && !todoForm.submitted)" class="text-danger">
+              Task name is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="date" class="col-md-2 col-form-label">Task Date</label>
+          <div class="col-md-5">
+            <input type="date" class="form-control" #date="ngModel" name="date" [(ngModel)]="todoDetail.date" placeholder="Task Date" required>
+            <div [hidden]="date.valid || (date.pristine && !todoForm.submitted)" class="text-danger">
+              Date is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="rating" class="col-md-2 col-form-label">Task Rating</label>
+          <div class="col-md-5">
+            <!-- <input type="text" class="form-control" pattern="^[0-5]$" maxlength="1" #rating="ngModel" name="rating" [(ngModel)]="todoDetail.rating" placeholder="Task Rating" required> -->
+            <select class="form-control" maxlength="1" #rating="ngModel" name="rating" [(ngModel)]="todoDetail.rating" required>
+              <option [value]="selectUndefinedValue" disabled hidden>Select Rating</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <div *ngIf="rating.invalid && (rating.dirty || rating.touched || todoForm.submitted)" class="text-danger">
+              <div *ngIf="rating.errors.required"> Rating is required. </div>
+              <!-- <div *ngIf="rating.errors.pattern"> Only number allowed.</div> -->
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-7 text-right">
+            <button type="submit" class="btn btn-primary mr-2">Save</button>
+            <button type="button" (click)="onClickCancel()" class="btn btn-primary">Cancel</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
